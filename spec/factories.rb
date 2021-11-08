@@ -2,6 +2,7 @@
 
 FactoryBot.define do
   factory :lot do
+    starting_bid_amount { 0 }
   end
 
   factory :bid do

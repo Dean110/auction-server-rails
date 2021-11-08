@@ -7,4 +7,10 @@ class Bid < ApplicationRecord
     greater_than: 0,
     message: 'The bid amount must be greater than 0.'
   }
+
+  validate :amount_greater_than_or_equal_to_required_increment
+
+  def amount_greater_than_or_equal_to_required_increment
+    errors.add(:amount, 'Bid not high enough.') if amount <= lot.current_high_bid
+  end
 end
