@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class BidsController < ApplicationController
-  before_action :set_bid, only: %i[ show edit update destroy ]
+  before_action :set_bid, only: %i[show edit update destroy]
 
   # GET /bids or /bids.json
   def index
@@ -7,8 +9,7 @@ class BidsController < ApplicationController
   end
 
   # GET /bids/1 or /bids/1.json
-  def show
-  end
+  def show; end
 
   # GET /bids/new
   def new
@@ -16,8 +17,7 @@ class BidsController < ApplicationController
   end
 
   # GET /bids/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /bids or /bids.json
   def create
@@ -25,7 +25,7 @@ class BidsController < ApplicationController
 
     respond_to do |format|
       if @bid.save
-        format.html { redirect_to @bid, notice: "Bid was successfully created." }
+        format.html { redirect_to @bid, notice: 'Bid was successfully created.' }
         format.json { render :show, status: :created, location: @bid }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +38,7 @@ class BidsController < ApplicationController
   def update
     respond_to do |format|
       if @bid.update(bid_params)
-        format.html { redirect_to @bid, notice: "Bid was successfully updated." }
+        format.html { redirect_to @bid, notice: 'Bid was successfully updated.' }
         format.json { render :show, status: :ok, location: @bid }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -51,19 +51,20 @@ class BidsController < ApplicationController
   def destroy
     @bid.destroy
     respond_to do |format|
-      format.html { redirect_to bids_url, notice: "Bid was successfully destroyed." }
+      format.html { redirect_to bids_url, notice: 'Bid was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_bid
-      @bid = Bid.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def bid_params
-      params.require(:bid).permit(:amount)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_bid
+    @bid = Bid.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def bid_params
+    params.require(:bid).permit(:amount)
+  end
 end

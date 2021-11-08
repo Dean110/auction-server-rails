@@ -1,43 +1,45 @@
-require "application_system_test_case"
+# frozen_string_literal: true
+
+require 'application_system_test_case'
 
 class BidsTest < ApplicationSystemTestCase
   setup do
     @bid = bids(:one)
   end
 
-  test "visiting the index" do
+  test 'visiting the index' do
     visit bids_url
-    assert_selector "h1", text: "Bids"
+    assert_selector 'h1', text: 'Bids'
   end
 
-  test "creating a Bid" do
+  test 'creating a Bid' do
     visit bids_url
-    click_on "New Bid"
+    click_on 'New Bid'
 
-    fill_in "Amount", with: @bid.amount
-    click_on "Create Bid"
+    fill_in 'Amount', with: @bid.amount
+    click_on 'Create Bid'
 
-    assert_text "Bid was successfully created"
-    click_on "Back"
+    assert_text 'Bid was successfully created'
+    click_on 'Back'
   end
 
-  test "updating a Bid" do
+  test 'updating a Bid' do
     visit bids_url
-    click_on "Edit", match: :first
+    click_on 'Edit', match: :first
 
-    fill_in "Amount", with: @bid.amount
-    click_on "Update Bid"
+    fill_in 'Amount', with: @bid.amount
+    click_on 'Update Bid'
 
-    assert_text "Bid was successfully updated"
-    click_on "Back"
+    assert_text 'Bid was successfully updated'
+    click_on 'Back'
   end
 
-  test "destroying a Bid" do
+  test 'destroying a Bid' do
     visit bids_url
     page.accept_confirm do
-      click_on "Destroy", match: :first
+      click_on 'Destroy', match: :first
     end
 
-    assert_text "Bid was successfully destroyed"
+    assert_text 'Bid was successfully destroyed'
   end
 end

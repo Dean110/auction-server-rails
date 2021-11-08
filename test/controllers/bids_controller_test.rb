@@ -1,21 +1,23 @@
-require "test_helper"
+# frozen_string_literal: true
+
+require 'test_helper'
 
 class BidsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @bid = bids(:one)
   end
 
-  test "should get index" do
+  test 'should get index' do
     get bids_url
     assert_response :success
   end
 
-  test "should get new" do
+  test 'should get new' do
     get new_bid_url
     assert_response :success
   end
 
-  test "should create bid" do
+  test 'should create bid' do
     assert_difference('Bid.count') do
       post bids_url, params: { bid: { amount: @bid.amount } }
     end
@@ -23,22 +25,22 @@ class BidsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to bid_url(Bid.last)
   end
 
-  test "should show bid" do
+  test 'should show bid' do
     get bid_url(@bid)
     assert_response :success
   end
 
-  test "should get edit" do
+  test 'should get edit' do
     get edit_bid_url(@bid)
     assert_response :success
   end
 
-  test "should update bid" do
+  test 'should update bid' do
     patch bid_url(@bid), params: { bid: { amount: @bid.amount } }
     assert_redirected_to bid_url(@bid)
   end
 
-  test "should destroy bid" do
+  test 'should destroy bid' do
     assert_difference('Bid.count', -1) do
       delete bid_url(@bid)
     end
