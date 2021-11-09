@@ -11,31 +11,59 @@ RSpec.describe Bid, type: :model do
       end
 
       describe 'be greater than or equal to the highest bid amount and the appropriate increment amount.' do
-        shared_examples 'failed validation - Amount Bid not high enough.' do
-          it 'should fail vaidation.' do
-            expect { subject }.to raise_error(ActiveRecord::RecordInvalid,
-                                              /Validation failed: Amount Bid not high enough./)
+        shared_examples 'bid amount is not high enough.' do
+          it 'Expects failed validation' do
+            expect { create(:bid, amount: amount, lot: lot) }.to raise_error(ActiveRecord::RecordInvalid,
+                                                                        /Validation failed: Amount Bid is not high enough./)
           end
         end
 
-        subject { create(:bid, amount: 1, lot: lot) }
-
-        context 'Given a bid that is the same as the starting bid' do
+        context 'Given a lot with only a starting bid and' do
           let(:lot) { create(:lot, starting_bid_amount: 1) }
 
-          it_should_behave_like 'failed validation - Amount Bid not high enough.'
+          context 'given a bid that is the same as the lot\'s starting bid,' do
+            let(:amount) { 1 }
+            
+            it_should_behave_like 'bid amount is not high enough.'
+          end
+
+          context 'given a bid that is less than the lot\'s starting bid,' do
+            let(:amount) { 0.50 }
+            
+            it_should_behave_like 'bid amount is not high enough.'
+          end
+
+          context 'given a bid that is less than the lot\'s minimum increment,' do
+            let(:amount) { 1.5 }
+
+            it_should_behave_like 'bid amount is not high enough.'
+          end
         end
 
-        context 'Given a bid that is less than the starting bid' do
-          let(:lot) { create(:lot, starting_bid_amount: 2) }
+        context 'Given a lot with one bid and' do
+          let(:lot) { create(:lot) }
 
-          it_should_behave_like 'failed validation - Amount Bid not high enough.'
-        end
+          before do
+            create(:bid, lot: lot, amount: 1)
+          end
 
-        context 'Given a bid that is less than the minimum increment' do
-          let(:lot) { create(:lot, starting_bid_amount: 0.50) }
+          context 'given a bid that is the same as the lot\'s high bid' do
+            let(:amount) { 1 }
+            
+            it_should_behave_like 'bid amount is not high enough.'
+          end
 
-          it_should_behave_like 'failed validation - Amount Bid not high enough.'
+          context 'given a bid that is less than the lot\'s high bid' do
+            let(:amount) { 0.50 }
+            
+            it_should_behave_like 'bid amount is not high enough.'
+          end
+
+          context 'given a bid that is less than the lot\'s high bid in addition to the minimum increment' do
+            let(:amount) { 1.5 }
+
+            it_should_behave_like 'bid amount is not high enough.'
+          end
         end
       end
     end
