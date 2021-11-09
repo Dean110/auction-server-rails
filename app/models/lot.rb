@@ -7,6 +7,10 @@ class Lot < ApplicationRecord
     greater_than_or_equal_to: 0,
     message: 'The starting bid amount must be greater than 0.'
   }
+  validates :minimum_bid_increment, numericality: {
+    greater_than_or_equal_to: 0,
+    message: 'The minimum bid increment must be greater than 0.'
+  }
 
   def current_high_bid
     starting_bid_amount

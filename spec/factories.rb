@@ -3,6 +3,7 @@
 FactoryBot.define do
   factory :lot do
     starting_bid_amount { 0 }
+    minimum_bid_increment { 1 }
   end
 
   factory :bid do

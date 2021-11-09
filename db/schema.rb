@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_211_108_025_504) do
+ActiveRecord::Schema.define(version: 20_211_109_020_636) do
   create_table 'auctions', force: :cascade do |t|
     t.string 'name'
     t.datetime 'created_at', precision: 6, null: false
@@ -35,5 +35,6 @@ ActiveRecord::Schema.define(version: 20_211_108_025_504) do
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
     t.decimal 'starting_bid_amount'
+    t.decimal 'minimum_bid_increment'
   end
 end

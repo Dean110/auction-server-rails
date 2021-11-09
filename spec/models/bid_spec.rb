@@ -11,14 +11,31 @@ RSpec.describe Bid, type: :model do
       end
 
       describe 'be greater than or equal to the highest bid amount and the appropriate increment amount.' do
-        context 'Given a bid that is the same as the starting bid amount'
+        shared_examples 'failed validation - Amount Bid not high enough.' do
+          it 'should fail vaidation.' do
+            expect { subject }.to raise_error(ActiveRecord::RecordInvalid,
+                                              /Validation failed: Amount Bid not high enough./)
+          end
+        end
+
         subject { create(:bid, amount: 1, lot: lot) }
 
-        let(:lot) { create(:lot, starting_bid_amount: 1) }
+        context 'Given a bid that is the same as the starting bid' do
+          let(:lot) { create(:lot, starting_bid_amount: 1) }
 
-        it 'should fail vaidation.' do
-          expect { subject }.to raise_error(ActiveRecord::RecordInvalid,
-                                            /Validation failed: Amount Bid not high enough./)
+          it_should_behave_like 'failed validation - Amount Bid not high enough.'
+        end
+
+        context 'Given a bid that is less than the starting bid' do
+          let(:lot) { create(:lot, starting_bid_amount: 2) }
+
+          it_should_behave_like 'failed validation - Amount Bid not high enough.'
+        end
+
+        context 'Given a bid that is less than the minimum increment' do
+          let(:lot) { create(:lot, starting_bid_amount: 0.50) }
+
+          it_should_behave_like 'failed validation - Amount Bid not high enough.'
         end
       end
     end
